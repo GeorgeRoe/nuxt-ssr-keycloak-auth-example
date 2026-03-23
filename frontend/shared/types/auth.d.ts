@@ -4,7 +4,8 @@ declare module '#auth-utils' {
     id: string
     name: string
     email: string
-    roles: string[]
+    roles: Role[]
+    // any other OIDC claims can go here
   }
   
   interface UserSession {

@@ -1,4 +1,3 @@
-// app.test.ts
 import { describe, it, expect, vi } from 'vitest'
 import { mountSuspended, mockNuxtImport } from '@nuxt/test-utils/runtime'
 import IndexPage from '../index.vue' // Adjust path if this is in /pages
@@ -9,7 +8,7 @@ const mockState = vi.hoisted(() => ({
     id: '123', 
     name: 'Grace Hopper', 
     email: 'grace@example.com', 
-    roles: ['admin'] 
+    roles: [ Role.TEST_ROLE ] 
   } as User | null,
   apiData: { message: 'Secure data from Rust' } as any,
   apiError: null as any
@@ -33,7 +32,7 @@ mockNuxtImport('useBackendApi', () => {
 describe('Authentication UI', () => {
   it('renders the welcome message and user roles when authenticated', async () => {
     // Ensure the state represents a "logged in" user
-    mockState.user = { id: '123', name: 'Grace Hopper', email: 'grace@example.com', roles: ['admin'] }
+    mockState.user = { id: '123', name: 'Grace Hopper', email: 'grace@example.com', roles: [ Role.TEST_ROLE ] }
     mockState.apiData = { message: 'Secure data from Rust' }
     mockState.apiError = null
 
