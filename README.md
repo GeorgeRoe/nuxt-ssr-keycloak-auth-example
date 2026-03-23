@@ -28,7 +28,8 @@ Then we create a new client. Use the following settings (if a setting isnt liste
 - Client authentication: On
 - Root URL: http://localhost:3000
 - Home URL: http://localhost:3000
-- Valid Redirect URIs: http://localhost:3000/api/auth/keycloak
+- Valid Redirect URIs: http://localhost:3000/api/auth/login
+- Valid post logout redirect URIs: http://localhost:3000/
 - Web origins: http://localhost:3000
 
 Then we create a new user. Use the following settings:

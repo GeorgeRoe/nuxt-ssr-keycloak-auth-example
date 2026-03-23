@@ -20,11 +20,13 @@ const { data, error } = await useBackendApi('/api/user')
           <li v-for="role in user.roles" :key="role">{{ role }}</li>
         </ul>
       </div>
+
+      <a href="/api/auth/logout">Logout</a>
     </div>
     
     <div v-else>
       <p>You are currently unauthenticated.</p>
-      <a href="/api/auth/keycloak">
+      <a href="/api/auth/login">
         Log in with Keycloak
       </a>
     </div>
