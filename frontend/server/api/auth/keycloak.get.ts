@@ -1,20 +1,18 @@
 export default defineOAuthKeycloakEventHandler({
   async onSuccess(event, { user, tokens }) {
-    // This runs securely on the server. 
-    // We encrypt the user data into an HTTP-only cookie.
+    // encrypt the user data into an HTTP-only cookie
     await setUserSession(event, {
       user: {
         id: user.sub,
         name: user.name,
         email: user.email,
-        // You can map any other standard OpenID claims here
+        // any other OIDC claims can go here, e.g., roles
       },
       secure: {
         accessToken: tokens.access_token
       }
     })
     
-    // Redirect back to the application after successful login
     return sendRedirect(event, '/')
   },
   

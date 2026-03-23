@@ -1,3 +1,4 @@
+// declare keycloak specific types to be used by nuxt-auth-utils
 declare module '#auth-utils' {
   interface User {
     id: string

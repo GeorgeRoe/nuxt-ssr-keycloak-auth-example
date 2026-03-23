@@ -1,8 +1,8 @@
 # Nuxt SSR Keycloak Authentication Example
 
-## Setup
+Simple example of implementing SSR-safe Keycloak authentication in a Nuxt 4 app.
 
-You must set up keycloak first and then the repo.
+## Setup
 
 ### Keycloak
 
@@ -40,27 +40,9 @@ Then we create a new user. Use the following settings:
 
 Then we set a password for the user. Go to the credentials tab of the user and set a new password. Ensure that you disable the "Temporary" option.
 
-### Repo
+### Repositories
 
-First, install dependencies:
-
-```bash
-npm i
-```
-
-Then, create a `.env` file in the root of the project with the following content:
-
-- `NUXT_SESSION_PASSWORD` - a random string used to encrypt the session cookie. You can generate one using `openssl rand -hex 32`.
-- `NUXT_OAUTH_KEYCLOAK_CLIENT_ID` - The client ID of the Keycloak client you created earlier (e.g. `nuxt-server`).
-- `NUXT_OAUTH_KEYCLOAK_CLIENT_SECRET` - The client secret of the Keycloak client you created earlier. You can find this in the Keycloak admin panel under the clients section, by clicking on your client and then going to the "Credentials" tab.
-- `NUXT_OAUTH_KEYCLOAK_SERVER_URL` - The URL of your Keycloak server (e.g. `http://localhost:8080`).
-- `NUXT_OAUTH_KEYCLOAK_REALM` - The name of the realm you created earlier (e.g. `nuxt-ssr-keycloak`).
-
-Then, start the development server:
-
-```bash
-npm run dev
-```
+First setup the `./backend` repo, then the `./frontend` repo.
 
 ## How it works
 
@@ -107,3 +89,23 @@ This method does however require us to use a proxy pattern for any API calls tha
 - **XSS Protection**: Cross-Site Scripting attacks cannot steal our access tokens because they simply do not exist in the browser's memory or storage.
 - **Possible CORS problems reduction**: The Vue frontend only ever talks to its own Nuxt backend domain.
 - **SSR**: The server is now aware of the user's authentication state and thus can render data on the server side, instead of relying on the client to populate the UI after it has loaded.
+
+## Verification
+
+### SSR
+
+You can verify that SSR is working by viewing the network tab in your browser's developer tools. You should see that the initial HTML response from the server already contains both:
+
+- The user's profile information (name, email, id)
+- A successful response from the backend server
+
+![Proof of SSR](./SSR-proof.png)
+
+### Token Inacceessibility
+
+You can verify that the access token is not accessible on the client side by trying to read the `nuxt-session` cookie in the browser's cookies.
+
+We should see that the `nuxt-session` cookie is present, but it is flagged as HttpOnly, which means that it cannot be accessed vie JavaScript.
+This is a crucial security feature that prevents malicious scripts from stealing the token.
+
+![Proof of HttpOnly cookie](./cookie-proof.png)

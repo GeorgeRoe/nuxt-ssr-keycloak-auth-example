@@ -1,17 +1,14 @@
 <script setup lang="ts">
-const { user, clear } = useUserSession()
+// securely fetches user data
+const { user } = useUserSession()
 
-// Optional: A helper to handle logging out
-async function handleLogout() {
-  await clear()
-  // You may also want to trigger a redirect to Keycloak's 
-  // end-session endpoint here if you want single sign-out.
-}
+// fetches data from the backend API, which will trigger a redirect to Keycloak if the user is not authenticated
+const { data, error } = await useBackendApi('/api/user')
 </script>
 
 <template>
   <main>
-    <h1>Nuxt Authentication PoC</h1>
+    <h1>Nuxt SSR KeyCloak Authentication Example</h1>
     
     <div v-if="user">
       <div>
@@ -19,10 +16,6 @@ async function handleLogout() {
         <p><strong>Email:</strong> {{ user.email }}</p>
         <p><strong>User ID:</strong> {{ user.id }}</p>
       </div>
-      
-      <button @click="handleLogout">
-        Log Out
-      </button>
     </div>
     
     <div v-else>
@@ -31,5 +24,8 @@ async function handleLogout() {
         Log in with Keycloak
       </a>
     </div>
+
+    <pre v-if="data">{{ data }}</pre>
+    <pre v-if="error">{{ error }}</pre>
   </main>
 </template>
