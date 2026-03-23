@@ -21,7 +21,8 @@ export default defineOAuthKeycloakEventHandler({
         // any other OIDC claims can go here
       },
       secure: {
-        accessToken
+        accessToken,
+        idToken: tokens.id_token
       }
     })
     

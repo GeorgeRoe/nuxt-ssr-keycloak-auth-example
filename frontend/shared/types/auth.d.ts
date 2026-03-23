@@ -12,6 +12,7 @@ declare module '#auth-utils' {
 
   interface SecureSessionData {
     accessToken: string
+    idToken: string
   }
 }
 
