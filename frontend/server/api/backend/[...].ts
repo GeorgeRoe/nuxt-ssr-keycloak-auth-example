@@ -7,8 +7,8 @@ export default defineEventHandler(async (event) => {
 
   const targetPath = event.context.params?._ ?? ''
 
-  const backendBaseUrl = 'http://127.0.0.1:3001'
-  const targetUrl = `${backendBaseUrl}/${targetPath}`
+  const { backendApiUrl } = useRuntimeConfig()
+  const targetUrl = `${backendApiUrl}/${targetPath}`
 
   return proxyRequest(event, targetUrl, {
     headers: {
