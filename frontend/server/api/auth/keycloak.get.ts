@@ -1,15 +1,27 @@
 export default defineOAuthKeycloakEventHandler({
   async onSuccess(event, { user, tokens }) {
+    const accessToken = tokens.access_token
+
+    const base64Url = accessToken.split('.')[1]
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/')
+    const payload = JSON.parse(Buffer.from(base64, 'base64').toString('utf-8'))
+
+    console.info(JSON.stringify(payload, null, 2))
+
+    const roles = payload.realm_access?.roles || []
+
     // encrypt the user data into an HTTP-only cookie
+    console.info(user)
     await setUserSession(event, {
       user: {
         id: user.sub,
         name: user.name,
         email: user.email,
-        // any other OIDC claims can go here, e.g., roles
+        roles
+        // any other OIDC claims can go here
       },
       secure: {
-        accessToken: tokens.access_token
+        accessToken
       }
     })
     

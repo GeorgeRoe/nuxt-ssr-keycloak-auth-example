@@ -15,6 +15,10 @@ const { data, error } = await useBackendApi('/api/user')
         <h2>Welcome, {{ user.name }}!</h2>
         <p><strong>Email:</strong> {{ user.email }}</p>
         <p><strong>User ID:</strong> {{ user.id }}</p>
+        <p><strong>Roles:</strong></p>
+        <ul>
+          <li v-for="role in user.roles" :key="role">{{ role }}</li>
+        </ul>
       </div>
     </div>
     

@@ -40,6 +40,13 @@ Then we create a new user. Use the following settings:
 
 Then we set a password for the user. Go to the credentials tab of the user and set a new password. Ensure that you disable the "Temporary" option.
 
+Next create a role called "test-role", this is done by going to the "Roles" tab and clicking "Create Role".
+
+We then must assign this role to our user.
+Go to the "Users" tab, click on your user, then go to the "Role Mapping" tab.
+Then, click the "Assign Role" button, and select "Realm Roles" from the dropdown.
+Finally, select the "test-role" and click "Assign".
+
 ### Repositories
 
 First setup the `./backend` repo, then the `./frontend` repo.
